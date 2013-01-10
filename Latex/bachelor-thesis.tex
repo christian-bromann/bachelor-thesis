@@ -1,0 +1,92 @@
+%
+% Hauptdokument
+% Abschlussarbeit (Bachelor)
+%
+% Thema: Erstellung einer Browser Extension zur Usability Evaluierung von beliebigen Web-Applikationen über Heatmaps.
+% Betreuer 1: Prof. Dr. Targo Pavlista
+% Betreuer 2: Siamak Haschemi
+%
+% @author Christian Bromann <contact@christian-bromann.com>
+%
+
+\documentclass[
+	bibliography=totoc,
+	listof=totoc,					% falls Index verwendet, ergänze "index=totoc" zu den Optionen 
+	BCOR=5mm,					% Rand für Bindung: 5mm
+	DIV=12]{scrbook}
+\usepackage{bibgerm}       			% deutsche Literaturverzeichnisse
+\usepackage[applemac]{inputenc} 		% Umlaute im Text
+\usepackage{graphicx} 				% Einfügen von Grafiken  - für PDF-Latex: .pdf und .png (.jpg möglich, sollte aber vermieden werden)
+
+\usepackage{fancyvrb, listings, color} 	% Für Code Ausgaben mit Highlighting
+\usepackage{caption}
+
+\definecolor{grey}{RGB}{240,240,240}
+\definecolor{darkgrey}{RGB}{88,88,88}
+\definecolor{brown}{RGB}{237,201,175}
+\definecolor{darkbrown}{RGB}{146,111,91}
+\definecolor{darkgreen}{RGB}{0,100,50}
+\definecolor{darkpurple}{RGB}{75,0,130}
+\definecolor{php}{RGB}{192, 64, 0}
+\definecolor{vars}{RGB}{71, 110, 155}
+\definecolor{functions}{RGB}{156, 112, 63}
+
+\lstset{
+    fancyvrb=true,
+    showstringspaces=false,
+    tabsize=3,
+    keywordstyle=\color{blue}\textbf,
+    commentstyle=\color{darkgreen}\textit,
+    stringstyle=\color{red},
+    backgroundcolor=\color{grey},
+    emph=[1]{php},
+    emphstyle=[1]\color{php},
+    emph=[2]{public,function,use,as,class,private,namespace,return},
+    emphstyle=[2]\color{darkpurple},
+    emph=[3]{Signee},
+    emphstyle=[3]\color{darkbrown},
+    emph=[4]{null,array},
+    emphstyle=[4]\color{brown},
+    emph=[5]{$form,$request,$em,$this,$id,$createdAt,$name,$signee,$signees},
+    emphstyle=[5]\color{vars},
+    emph=[6]{getSigneeForm,getRequest,getMethod,getData,getDoctrine,getEntityManager,persist,flush,getRepository,render,findAll},
+    emphstyle=[6]\color{functions}
+}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{darkgrey}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\usepackage{url}           				% URL's (z.B. in Literatur) schöner formatieren
+\usepackage{hyperref} 				% sorgt für Hyperlinks in PDF-Dokumenten
+
+\graphicspath{{./images/}}				% Pfad zu den Bildern des Dokumentes
+
+\begin{document}
+
+% ---------------------------------------------------------------
+
+\frontmatter 						% Titelblätter und Erklärung
+    \include{./preface/title} 				% Titelblatt mit Beuth Logo, Titel und Name
+    \thispagestyle{empty}
+    \cleardoublepage
+    \include{./preface/clarification}		% Erklärung zur selbstständigen Arbeit
+    \include{./preface/abstract} 			% Abstract
+    \thispagestyle{empty}
+    \tableofcontents 					% Inhaltsverzeichnis
+
+% ---------------------------------------------------------------
+
+\mainmatter 						% die eigentliche Arbeit
+
+    \input{./content/chapter1}
+
+
+% ---------------------------------------------------------------
+
+\backmatter 						% ab hier keine Nummerierung mehr
+    \listoffigures						% Abbildungsverzeichnis
+    \lstlistoflistings					% Listing
+    %\include{./Literaturverzeichnis/literaturverzeichnis}
+
+\end{document}
