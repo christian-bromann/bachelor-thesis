@@ -1,28 +1,97 @@
+\chapter*{Abstract}%
+\addcontentsline{toc}{chapter}{\numberline{}Abstract}%
+
 \chapter{Einleitung}
 	\section{Motivation und Ausgangssituation}
 	\section{Projektziel}
 	\section{Aufbau der Arbeit}
 
-\chapter{Web-Usability}
-	\section{Normen}
-	\section{Barrierefreiheit}
-	
+\chapter{Usability}
+% Was ist Usability
+% http://www.webpagecontent.com/arc_archive/124/5/
+	\section{Usability im Web}
+	% Usability lässt sich nicht via Testscript Testen, sondern hängt immer ab von den verschiedenen Einflüssen der Benutzer
+	% http://usabilitygeek.com/an-introduction-to-website-usability-testing/
+	% http://usabilitygeek.com/wp-content/uploads/2011/06/International-Journal-of-Human-Computer-Interaction-IJHCI-Volume-2-Issue-1.pdf
+	\section{Einflüsse}
+	% Was kann die Benutzbarkeit beeinflussen
+	% Barrierefreiheit
+	% X-Browser Gleichheit
+	\section{Metriken}
+		\subsection{Clickmaps}
+		\subsection{Heatmaps}
+		\subsection{Gazespots}
+		\subsection{Gazeplots}
+	\section{Marktanalyse}
+	% Analyse schon vorhandener Produkte
+	% zbs: loop11.com, met.picnet.com.au, crazyegg.com
+	\section{Mensch vs. Maschiene}
+	% in wie weit kann durch Testscripts die Usability getestet werden
+	% webdriverjs
+	\section{Business-Case}
+	% mögliche Testprozesse
+	% automatische vs. gesteuert
+
 \chapter{thEvaluator}
 	\section{Zielbestimmungen}
+	% Entwickler muss für bestimmte Sachen Events definieren
+	% vs.
+	% Tool kommt ohne Definierung von Events aus
+	\section{Produktfunktionen}
+	% Was ist möglich, wie weit gehen die Auswertungen
 	\section{Produkteinsatz}
-	\section{Produktfunktion}
-	\section{TestCase Definition}
-	\section{Aufzeichnungskriterien}
-	\section{Qualitätsanforderungen}
-	\section{Entwicklungsumgebung}
-
-\chapter{Datenverarbeitung}
-	\section{Sockets}
-	\section{NoSQL Datenbank}
-	\section{Datenaufbereitung}
-
-\chapter{Präsentation}
-	\section{Heatmaps}
-	\section{Kriterien}
-	\section{WebGL Ausgabe}
+	% Wie/Wann kann das Tool genutzt werden
+	\section{Extension}
+		\subsection{Aufbau}
+		% Aus was besteht eine Chrome Extension
+		% Manifest erklären
+		% Einbindung ohne Google Store
+		\subsection{Architektur}
+		% http://developer.chrome.com/extensions/overview.html
+		\subsection{Nachrichtenübermittlung}
+		% http://developer.chrome.com/extensions/messaging.html
+		\subsection{Datenaufzeichnung}
+		% Welche Daten werden wann aufgezeichnet
+		% Screenshot Erstellung
+		% Problematik der erhöhten Datenmenge
+	\section{API}
+		\subsection{Architektur}
+		% express, welche Models gibt es
+		% Welche Dependencies , Deploymentprozess
+		\subsection{Asynchronität in nodeJS}
+		% Möglichkeiten zur Lösung über closures, callbacks, Modulen wie async
+		\subsection{REST Schnittstellen}
+		% Auflistung mit erforderten Werten / Rückgabewerten
+		\subsection{Socket Streams}
+		% Auflistung mit erforderten Werten / Rückgabewerten
+		\subsection{Persistierung}
+		% SQL vs NoSQL
+		% MongoDB / Mongoose
+	\section{Webapplikation}
+		\subsection{Aufbau}
+		% Tooling, Bower, NPM
+		% State of the art frontend entwicklung
+		% Welche Dependencies , Deploymentprozess
+		\subsection{Architektur}
+		% Backbone, Models (die DB Modelle abbilden) Collections, Views
+		% MV* Erklärung
+		\subsection{TestCase Definition}
+		% warum welche Attribute und Bedeutung (zbs. Auflösung, required)
+		\subsection{Datenaufbereitung}
+		% wann werden welche Daten geladen (lazy loading)
+		% handling der Datenmenge
+		\subsection{Datenevaluation}
+		% welche Auswertungswidgets gibt es / Bedeutung
+		% wann kann man mögliche Resultate ableiten
+		\subsection{Qualitätsanforderungen}
+	\section{Zukunftsaussichten}
+	% Einsatz der Webcam für Eyetracking
+	
+\chapter{Ergebnis}
+	\section{Scope-Verschiebung während der Entwicklung}
+	% Heatmaps sind nicht mehr das Einzige, was es wert ist zu untersuchen
+	% thEvaluator als universelles Usability Tool
+	\section{Evaluierung der Hochschulseite}
+	\section{Ergebnisse}
+	\section{Schlüsse}
 
