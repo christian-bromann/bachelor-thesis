@@ -9,3 +9,7 @@
 *.idx
 *.lol
 *.synctex.gz
+*.bbl
+*.blg
+*.bib.bak
+*.bst
