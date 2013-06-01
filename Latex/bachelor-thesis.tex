@@ -2,7 +2,7 @@
 % Hauptdokument
 % Abschlussarbeit (Bachelor)
 %
-% Thema: Erstellung einer Browser Extension zur Usability Evaluierung von beliebigen Web-Applikationen 웑er Heatmaps.
+% Thema: Erstellung einer Browser Extension zur Usability Evaluierung von beliebigen Web-Applikationen 체ber Heatmaps.
 % Betreuer 1: Prof. Dr. Targo Pavlista
 % Betreuer 2: Siamak Haschemi
 %
@@ -11,14 +11,14 @@
 
 \documentclass[
 	bibliography=totoc,
-	listof=totoc,					% falls Index verwendet, erg둵ze "index=totoc" zu den Optionen 
-	BCOR=5mm,					% Rand f웦 Bindung: 5mm
+	listof=totoc,							% falls Index verwendet, erg채nze "index=totoc" zu den Optionen 
+	BCOR=5mm,							% Rand f체r Bindung: 5mm
 	DIV=12]{scrbook}
-\usepackage{bibgerm}       			% deutsche Literaturverzeichnisse
-\usepackage[applemac]{inputenc} 		% Umlaute im Text
-\usepackage{graphicx} 				% Einf웗en von Grafiken  - f웦 PDF-Latex: .pdf und .png (.jpg m쉍lich, sollte aber vermieden werden)
+\usepackage{bibgerm}       					% deutsche Literaturverzeichnisse
+\usepackage[utf8]{inputenc} 		       			% Umlaute im Text
+\usepackage{graphicx} 						% Einf체gen von Grafiken  - f체r PDF-Latex: .pdf und .png (.jpg m철glich, sollte aber vermieden werden)
 \usepackage{setspace}
-\usepackage{fancyvrb, listings, color} 	% F웦 Code Ausgaben mit Highlighting
+\usepackage{fancyvrb, listings, color} 			% F체r Code Ausgaben mit Highlighting
 \usepackage{caption}
 
 \definecolor{grey}{RGB}{240,240,240}
@@ -57,40 +57,42 @@
 \DeclareCaptionFormat{listing}{\colorbox{darkgrey}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
-\usepackage{url}           				% URL's (z.B. in Literatur) sch쉗er formatieren
-\usepackage{hyperref} 				% sorgt f웦 Hyperlinks in PDF-Dokumenten
-
-\graphicspath{{./images/}}				% Pfad zu den Bildern des Dokumentes
+\usepackage{url}           						% URL's (z.B. in Literatur) sch철ner formatieren
+\usepackage{hyperref} 						% sorgt f체r Hyperlinks in PDF-Dokumenten
+\usepackage{glossaries}						% Glossary Paket einbinden
+\makeglossaries
+\graphicspath{./images/}	 					% Pfad zu den Bildern des Dokumentes
 \linespread{1.3}
 
 \begin{document}
 
 % ---------------------------------------------------------------
 
-\frontmatter 						% Titelbl둻ter und Erkl둹ung
-    \include{./preface/title} 				% Titelblatt mit Beuth Logo, Titel und Name
+\frontmatter 								% Titelbl채tter und Erkl채rung
+    \include{./preface/title} 					% Titelblatt mit Beuth Logo, Titel und Name
     \thispagestyle{empty}
     \cleardoublepage
-    \include{./preface/clarification}		% Erkl둹ung zur selbstst둵digen Arbeit
-    \include{./preface/abstract} 			% Abstract
+    \include{./preface/clarification}				% Erkl채rung zur selbstst채ndigen Arbeit
+    \include{./preface/abstract} 					% Abstract
     \addcontentsline{toc}{chapter}{\numberline{}Abstract}
     \thispagestyle{empty}
     \begin{spacing}{1.6}
-        \tableofcontents					% Inhaltsverzeichnis
+        \tableofcontents						% Inhaltsverzeichnis
     \end{spacing}
 % ---------------------------------------------------------------
 
-\mainmatter 						% die eigentliche Arbeit
+\mainmatter 								% die eigentliche Arbeit
 
     \input{./content/index}
 
 
 % ---------------------------------------------------------------
 
-\backmatter 						% ab hier keine Nummerierung mehr
-    \listoffigures						% Abbildungsverzeichnis
-    \lstlistoflistings					% Listing
+\backmatter 								% ab hier keine Nummerierung mehr
+    \listoffigures								% Abbildungsverzeichnis
+    \lstlistoflistings							% Listing
     \bibliographystyle{alpha}
     \bibliography{./bibliography/bibliography}
+    \printglossaries
 
 \end{document}
