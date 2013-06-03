@@ -15,7 +15,7 @@
 	BCOR=5mm,							% Rand für Bindung: 5mm
 	DIV=12]{scrbook}
 \usepackage{bibgerm}       					% deutsche Literaturverzeichnisse
-\usepackage[utf8]{inputenc} 		       			% Umlaute im Text
+\usepackage[utf8]{inputenc}		       			% Umlaute im Text
 \usepackage{graphicx} 						% Einfügen von Grafiken  - für PDF-Latex: .pdf und .png (.jpg möglich, sollte aber vermieden werden)
 \usepackage{setspace}
 \usepackage{fancyvrb, listings, color} 			% Für Code Ausgaben mit Highlighting
@@ -59,7 +59,7 @@
 
 \usepackage{url}           						% URL's (z.B. in Literatur) schöner formatieren
 \usepackage{hyperref} 						% sorgt für Hyperlinks in PDF-Dokumenten
-\usepackage{glossaries}						% Glossary Paket einbinden
+\usepackage[toc]{glossaries}						% Glossary Paket einbinden
 \makeglossaries
 \graphicspath{./images/}	 					% Pfad zu den Bildern des Dokumentes
 \linespread{1.3}
@@ -76,7 +76,7 @@
     \include{./preface/abstract} 					% Abstract
     \addcontentsline{toc}{chapter}{\numberline{}Abstract}
     \thispagestyle{empty}
-    \begin{spacing}{1.6}
+    \begin{spacing}{1.5}
         \tableofcontents						% Inhaltsverzeichnis
     \end{spacing}
 % ---------------------------------------------------------------
