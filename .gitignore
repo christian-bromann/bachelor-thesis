@@ -2,4 +2,17 @@ TSWLatexianTemp*
 *.bib.bak
 *.bst
 *.aux
+*.bbl
+*.blg
+*.glg
+*.glo
+*.gls
+*.ist
+*.lof
+*.log
+*.lol
+*.out
+*.pdf
+*.synctex.gz
+*.toc
 PDF/*
