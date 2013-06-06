@@ -11,8 +11,23 @@
 
 \chapter{Usability}
 
-% Was ist Usability
-% http://www.webpagecontent.com/arc_archive/124/5/
+Mit dem Substantiv \textit{Gebrauchstauglichkeit} übersetzt die ISO Norm 9241 den Begriff Usability und bezeichnet damit den Prozess der \glqq Benutzer-orientierte Gestaltung interaktiver Systeme\grqq{} \cite{iso9241}. Oft gleichgesetzt mit dem Fachgebiet der Human-Computer-Interaktion, beschreibt es das Bestreben dem Benutzer einer Software zu helfen, ein gewisses Ziel möglichst schnell und effizient zu erreichen. Es ist damit der wichtigste Erfolgsfaktor der Systemqualität. Die Bedienung des Computers ist dabei immer mit einer Aufgabe verbunden, die der Nutzer mithilfe einer Software versucht zu lösen. Dieses Prinzip lässt sich vereinfacht in ein Mensch-Maschinen-System zerlegen. Es basiert auf vier prinzipiellen Komponenten, die möglichst ergonomisch miteinander agieren sollen.
+
+\vspace{0.6cm}
+\includegraphics[scale=0.5]{./images/human-machine-system}
+\begin{figure}[htb]
+   \centering
+   \caption{Mensch-Maschinen-System \textbf{Quelle:} \cite{UsabilityKompakt}}
+    \label{mms}
+\end{figure}
+
+Die Eigenschaften und Funktionen einer Software bestimmen dabei nicht ausschließlich dessen Usability. So spielt das Einsatzumfeld ebenfalls eine wichtige Rolle. Beispielhaft ausgedrückt kann ein Flaschenöffner noch so handlich sein, wenn er dafür genutzt wird, Nägel in die Wand zu schlagen. Daher liegt eine benutzerfreundliche und ergonomische Software erst dann vor, wenn \glqq sie von den vorhergesehen Benutzern einfach erlernt und effizient verwendet werden [kann] und diese damit ihre beabsichtigen Ziele und Aufgaben zufriendenstellend [ausführt]\grqq{} \cite{UsabilityKompakt}.\\
+\\
+Um dies zu erreichen, sollte \textit{Usability Engineering} ein wichtiger Prozess in der Entwicklung einer Software sein. Angefangen von der Definition messbarer Usability Attribute über die Festlegung von numerischen Werten dieser bis hin zum Testen der Software ist dies ein sich immer wiederkehrendes Verfahren, bei dem sich die Methodik flexibel gestaltet. Die Attributen sollten möglichst einfache messbare Eigenschaften der Software darstellen und nach jedem Test mit den festgelegten Werten verglichen werden. Sind die Werte nicht erreicht worden, folgt eine Analyse der aufgetretenen Probleme und die anschließende Verbesserung der Software. Es handelt sich um einen iterativen Prozess, der nie wirklich einen Abschluss findet. Verbesserungen in der Usability sind immer möglich. Meist erreicht man jedoch einen zufriedenstellenden Grad der Benutzerfreundlichkeit oder hat keine Zeit oder Budget mehr für weitere Tests.\\
+\\
+\textit{Usability Testing} bezeichnet den gesamten Ablauf, bei dem überprüft wird, ob festgelegte Usability Ziele erreicht wurden oder nicht. Die Tests unterteilen sich in verschiedene Methoden, die unterschiedliche Daten für die heuristische Auswertung sammeln. Diese sollten in einer Vorbereitungsphase genau bestimmt werden und gewissen Kriterien unterliegen, damit sie ein genaues Abbild des Nutzerverhaltens widerspiegeln. Die Durchführung muss dabei nicht zwingend in einem Labor erfolgen. Oft verfälschen sogar Tests unter Laborbedingungen das Ergebnis, da der Benutzer der Software nicht in einem gewohntem Umfeld agiert und dadurch zu einem anderen Verhalten neigt. Eine festgeschrieben Mindestanzahl von Personen, die an dem Test teilnehmen, gibt es nicht. Nach Jakob Nielsen reichen schon 5 Probanden aus \cite{anzahlTestpersonen}, um einen großen Anteil der Probleme herauszufinden. Eine anschließende Analyse der Ergebnisse durch verschiedene Metriken deckt Schwachstellen in der Benutzung auf und kann mögliche Verbesserungen der Software herleiten.\\
+\\
+Im Laufe der letzten Jahrzehnte wurde für die Softwareentwicklung verschiedene Vorgehensmodelle entwickelt um eine koordinierte Vorgehensweise für die Erstellung von Software zu gewährleisten. Modelle, wie zbs. das Wasserfallmodell oder das V-Modell, werden in der Realität jedoch kaum wirklich eingehalten. Es enstehen immer wieder Mischformen, bei denen Elemente der benutzerorientierten Entwicklung integriert werden. Dieser, als sogenannte \textit{Usability Engineering Lifecycle} bezeichnete, Prozess bringt nach der Analyse- und Entwicklungsphase noch eine eine Nutzungsphase mit sich, da davon ausgegangen wird, dass \glqq trotz sorgfältiger Analyse und Entwicklung einige Nutzungsprobleme [sich] erst im Echtbetrieb herausstellen\grqq{} \cite{lifecycle}.
 
 \input{./content/02_usability/in-web}
 \input{./content/02_usability/influences}
