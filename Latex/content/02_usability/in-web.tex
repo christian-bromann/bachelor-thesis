@@ -10,7 +10,6 @@
 %
 
 \section{Usability im Web}
-
 Das Thema Usability beschäftigt viele Bereiche der IT-Branche, doch nirgends erfährt sie so viel Aufmerksamkeit wie im Web. Hier ist eine hohe Benutzerfreundlichkeit essenziell, da der Besucher sofort die Webseite verlässt, wenn ihn etwas stört. Nirgendwo anders bestimmt das Wohlgefühl des Nutzers über die Dauer der Nutzung eines Produktes. Es ist der wichtigste Erfolgsfaktor eine Seite. Nicht nur deshalb beschäftigen sich so viele Menschen mit dem Thema Usability im Web. Es gibt mittlerweile dutzende Richtlinien und Standards, die verschiedene Regeln für Design, Struktur und Inhalt vorgeben. Einer der größten sind die \glqq Research-Based Web  Design \& Usability Guidelines\grqq{}, veröffentlicht vom U.S. Department of Health and Human Services, die ISO Norm 9241 sowie die Studie der JISC (JointInformation Systems Committee for higher education) über \glqq Guidelines For Academic Web Sites\grqq{} \cite{isoStandards}. Jedes Jahr tauschen sich Experten auf vielen Konferenzen über das Themas Usability aus und erhalten Preise von etlichen Usability Award Stiftungen. Dies zeigt wie groß der Focus auf diese Thematik liegt und unterstreicht ihre Wichtigkeit.\\
 \\
 Nach Jakob Nielsen bezieht sich Usability auf Eigenschaften wie Erlernbarkeit, Effizienz, Einprägsamkeit, Fehlerbehandlung und Nutzerzufriedenheit. Projiziert man dies auf das Web, so müssen die Definition der Attribute etwas verfeinert werden, um sie auf Webapplikationen anwenden zu können. Der Grund des Besuches einer Webseite basiert entweder auf das Suchen von bestimmten Informationen oder die Nutzung von Services, die dort angeboten werden. Die Applikation muss dabei das Vorhaben des Besuchers unterstützten, indem sie durch klare Trennung von Inhalt und Navigation leicht zu erlernen ist, ihre Inhalte effizient und schnell zugänglich macht und nach langer Abwesenheit immer noch nutzbar ist. Zudem sollte sie bei einem Fehler dem User Hilfe anbieten und ihm eine Art Wohlgefühl bei der Nutzung bereiten \cite{UsabilityPriciples}.\\
@@ -26,15 +25,33 @@ Sind die Inhalte einmal geladen, so müssen sie auch gut zu erkennen sein. Ein g
 \\
 Ein weiteres Hindernis sind Zusatzkomponenten, die eine Seite benötigt, um ihren Inhalt darstellen darstellen zu können. Das bekannteste Beispiel hierfür ist Flash. Obwohl die Mehrheit der Besucher dieses Zusatzprogramm installiert haben, gibt es dennoch viele User, die dies nicht haben. Gerade Leute, die mit einem Smartphone ins Internet gehen, müssen auf diese Inhalte verzichten. Dabei gibt es oft keinen Grund externe Programme in den Browser einzubinden. Der heutige Standard rund um HTML, JavaScript und CSS bietet alle Möglichkeiten, eine gleichwertige Applikation ohne die Erweiterung durch Flash oder Silverlight zu erstellen.\\
 \\
-Das Thema Internetzugang über das Smartphone ist ebenfalls eine wichtige Thematik. Immer mehr Menschen surfen im Internet während sie unterwegs sind oder bequem über das Tablett auf dem Sofa. Heutzutage sind noch nicht alle Webseiten dafür optimiert. Die Darstellung auf den deutliche kleineren Bildschirmen ist meist nicht für die Nutzung dafür geeignet. Mit einem \textit{Responsive Design} kann eine Seite speziell für eine kleinere Auflösung ausgeliefert werden und bietet auch den mobilen Nutzer eine komfortable und benutzerfreundliche Nutzung der Seite.
+Das Thema Internetzugang über das Smartphone ist ebenfalls eine wichtige Thematik. Immer mehr Menschen surfen im Internet während sie unterwegs sind oder bequem über das Tablett auf dem Sofa. Heutzutage sind noch nicht alle Webseiten dafür optimiert. Die Darstellung auf den deutliche kleineren Bildschirmen ist meist nicht für die Nutzung dafür geeignet. Mit einem \textit{Responsive Design} kann eine Seite speziell für eine kleinere Auflösung ausgeliefert werden und bietet auch den mobilen Nutzer eine komfortable und benutzerfreundliche Nutzung.
 
 
 \subsection{Identität}
 
+Das Erste was dem User durch den Kopf schießt sobald er eine Webseite aufruft ist: \textit{\glqq Wer oder Was stellt sich hier vor?\grqq{}} oder \textit{\glqq Was wird hier geboten?\grqq{}}. Um relativ schnell das Vertrauen des Benutzers zu gewinnen, sollte das Corperate Design schnell erkennbar sein, bspw. durch ein prominente Position des Logos in der oberen Hälfte der Seite. Für eine schnelle Übersicht ist zudem eine kurze und klare Beschreibung über den Inhalt und den Service direkt beim Start von Vorteil.\\
+\\
+Eine Kontaktseite sollte ebenfalls immer direkt erreichbar sein. Gerade bei Seiten, die einen Service anbieten ist dies enorm wichtig. Kommt es zu Fragen, da zbs. irgendetwas nicht richtig funktioniert, suchen Besucher immer die Möglichkeit auf eine Kontaktaufnahme und sind enttäuscht, wenn sie keinen finden.
+
 
 \subsection{Navigation}
+
+Sobald der Besucher erst einmal weiß, von wem er die Seite besucht und was ihn hier erwartet, braucht er eine Navigation, die ihn an sein Ziel führt. Diese sollte konsistent und klar zu erkennen sein. Eine Hauptnavigation, die auf jeder Seite an der gleichen Position zu finden ist, führt den Besucher am einfachsten durch die Struktur der Seite.\\
+\\
+Ist diese Struktur jedoch sehr komplex, führt sie oft zu Orientierungsverlust und überfordert den Besucher. Dies ist oft bei akademischen Webseiten der Fall. Hier werden verschiedenste Inhalte für ganz unterschiedliche Benutzergruppen angeboten. Diese haben es schwer, die gewünschten Informationen zu finden, da der Content tief verschachtelt in diversen Oberkategorien steckt. Die Erstellung einer geeigneten Link Struktur ist deshalb eines der wichtigsten und gleichzeitig schwersten konzeptionellen Aufgaben. Die Analyse von Verhaltens- und Navigationsmustern und der anschließenden Verbesserung der Link Struktur einer Seite fällt unter den Begriff des \textit{Web-Usage-Mining}, welches ein Untersuchungsgegenstand des \textit{Web Minings} ist. \cite{webusagemining}.
+
+\begin{equation}
+    E = \sum_{i != j} \frac{C_{ij}}{[N * (N - 1)]}
+    \label{connectivity}
+\end{equation}
+
 \subsection{Inhalt}
 
-% Grundsatz and regeln und normen erklären, die usability beeinflussen (prominter ort für logo etc)
-% http://usabilitygeek.com/an-introduction-to-website-usability-testing/
-% http://usabilitygeek.com/wp-content/uploads/2011/06/International-Journal-of-Human-Computer-Interaction-IJHCI-Volume-2-Issue-1.pdf
+
+
+
+
+
+
+
