@@ -15,4 +15,5 @@ TSWLatexianTemp*
 *.pdf
 *.synctex.gz
 *.toc
+*.bib$
 PDF/*
