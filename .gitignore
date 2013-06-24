@@ -13,7 +13,9 @@ TSWLatexianTemp*
 *.lol
 *.out
 *.pdf
+!Latex/images/*
 *.synctex.gz
 *.toc
 *.bib$
 PDF/*
+.DS_Store
