@@ -11,9 +11,11 @@
 
 \section{API}
 
-Die \textbf{API} ist der Datenmotor des Frameworks. Sie ist sowohl für die Datenpersistierung als auch für dessen Auslieferung zuständig.
+Die \textbf{API} ist der Datenmotor des Frameworks. Sie ist sowohl für die Datenpersistierung als auch für dessen Auslieferung zuständig. Hinter ihr steckt eine NodeJS Applikation, die als dedizierter Service auf einem Server unter einem bestimmten Port laufen muss. Bei einem Test ist sie in ständiger Verbindung mit der Browser Extension, um möglichst viele Daten aufzunehmen. NodeJS eignet sich hierfür sehr gut, da es event-getrieben agiert und dabei nicht blockierend wirkt. Dies bedeutet, dass alle langandauerenden Aktivitäten, wie z.B. Dateizugriffe, Netzwerk Kommunikationen oder Datenbankzugriffe, bei Seite gepackt werden, bis sie beendet sind und das Ergebnis in einer Funktion verarbeitet werden kann \cite{nonblocking}. Dadurch werden Server-Anfragen parallel abgearbeitet und nicht, wie z.B. bei PHP, sequenziell. Dies sorgt für eine stabile Verbindung zwischen Server API und Extension. Zusätzlicher Vorteil einer NodeJS basierten API Architektur ist die Performance. NodeJS basiert auf Googles hochgeschwindigkeits V8 Engine und sorgt damit für eine deutliche höhere Reaktionszeit beim Server im Vergleich zu Apache-Servern \cite{nodevsphp}.
+
 
 \subsection{Architektur}
+
 % express, welche Models gibt es
 % Welche Dependencies , Deploymentprozess
 
