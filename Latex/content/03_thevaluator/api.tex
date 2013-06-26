@@ -9,6 +9,8 @@
 % @author Christian Bromann <contact@christian-bromann.com>
 %
 
+\newglossaryentry{URI}{name=URI, description={(Abk. für Uniform Resource Identifier) entspricht der Bedeutung der URL. Der Begriff wurde in einer späteren Spezifikation festgelegt und beschreibt die Identifikation von Ressourcen etwas allgemeinerer}}
+
 \section{API}
 
 Die \textbf{API} ist der Datenmotor des Frameworks. Sie ist sowohl für die Datenpersistierung als auch für dessen Auslieferung zuständig. Hinter ihr steckt eine NodeJS Applikation, die als dedizierter Service auf einem Server unter einem bestimmten Port laufen muss. Bei einem Test ist sie in ständiger Verbindung mit der Browser Extension, um möglichst viele Daten aufzunehmen. NodeJS eignet sich hierfür sehr gut, da es event-getrieben agiert und dabei nicht blockierend wirkt. Dies bedeutet, dass alle langandauerenden Aktivitäten, wie z.B. Dateizugriffe, Netzwerk Kommunikationen oder Datenbankzugriffe, bei Seite gepackt werden, bis sie beendet sind und das Ergebnis in einer Funktion verarbeitet werden kann \cite{nonblocking}. Dadurch werden Server-Anfragen parallel abgearbeitet und nicht, wie z.B. bei PHP, sequenziell. Dies sorgt für eine stabile Verbindung zwischen Server API und Extension. Zusätzlicher Vorteil einer NodeJS basierten API Architektur ist die Performance. NodeJS basiert auf Googles hochgeschwindigkeits V8 Engine und sorgt damit für eine deutliche höhere Reaktionszeit beim Server im Vergleich zu Apache-Servern \cite{nodevsphp}.
@@ -91,6 +93,7 @@ async.series([
     // ...
 ]);
 \end{lstlisting}
+\vspace{0.3cm}
 
 Das Beispiel zeigt, dass das Modul \textit{Async.js} eine Methode \textit{series} anbietet, welche eine Array mit Funktionen als Parameter aufnimmt und diese sequenziell abarbeitet. Dies ist nur eine Möglichkeit, die das Modul anbietet, um asynchrone Algorithmen so strukturieren. Es bietet für viele Varianten verschiedene Lösungen an.\\
 \\
@@ -113,16 +116,74 @@ asynchronousFunction().then({
   }
 }).then(...);
 \end{lstlisting}
+\vspace{0.1cm}
 
 Durch die Bereitstellung einer \textit{then} Methode, welches die als Parameter aufgeführten Callbacks erst dann ausführt, sobald die Operation endet, ermöglichen Promises die Vereinfachungen von komplexen Asynchronen Codestrukturen. Da es noch keine offizielle Standardisierung für Promises in JavaScript gibt, wird dieses Feature in dieser Sprache noch nicht unterstützt. Mittlerweile gibt es bereits einen Vorschlag für die Spezifizierung dieses Paradigmas\footnote{CommonJS Promises/A proposal - \url{http://wiki.commonjs.org/wiki/Promises/A}}. Nach Planung von Ecma International, die EcmaScript und somit die Sprache JavaScript standardisieren, wird dieses Feature jedoch erst in EcmaScript 7 aufgenommen. Bis dahin muss sich der Entwickler auf Bibliotheken und Module verlassen, die das Paradigma versuchen abzubilden.\\
 \\
 Wie die Beispiele zeigen, gibt es Wege, die Asynchronität in den Griff zu bekommen. Für viele Entwickler fällt es im ersten Moment schwer, sich in die asynchrone Verarbeitung hinein zu versetzen und von den Glauben abzukommen, dass alles sequenziell abläuft. Entstehen zu viele verschachtelte Funktionen, da eine Menge asynchroner Operationen ausgeführt werden müssen, so kann es auch sein, dass NodeJS nicht das richtige Werkzeug für die Umsetzung des Vorhabens ist und sich eine thread-basierte Abarbeitung besser eignet. Diese sollte dann der Entwickler von Fall zu Fall unterscheiden.
 
 \subsection{REST Schnittstellen}
-% Auflistung mit erforderten Werten / Rückgabewerten
+
+Der als REST, oder auch \textit{\glqq REpresentational State Transfer\grqq{}}, bezeichnete Architekturstil ist ein Programmierparadigma für Webanwendungen und stellt in vielerlei Hinsicht eine retrospektive Abstraktion der Prinzipien dar, die das World Wide Web skalierbar machen \cite{rest}. Es handelt sich dabei um einen Webservice, dessen einzige Aufgabe es ist, eine bestimmte generierte Menge von Datensätzen oder Datenobjekte (representational state) für eine bestimmte \Gls{URI} bereitzustellen. Diese ist der bestimmende Faktor für den Typ und die Menge der Datensätze. Das Format der Ausgabe muss dem Client bei der Nutzung des Rest-Services bekannt sein. In den meisten Fällen handelt es sich um ein XML oder JSON Format.\\
+\\
+Das HTTP 1.0 Protokoll bietet vier Methoden zur Nutzung von Rest-Services an, die beschreiben, wie dieser mit den Daten umzugehen hat. Die einfachste und meist genutzte Methode ist die \textit{GET} Methode. Sie verlangt vom Server lediglich die Ausgabe der Daten. Die \textit{POST} Methode beinhaltet bei einem Request, neben der \Gls{URI}, noch Daten, die der Server aufnehmen soll. Im Erfolgsfall liefert dieser sie wieder zurück und bestätigt damit die Aufnahme der Daten in die Datenbank. Ähnlich funktioniert die \textit{PUT} Methode. Sie fügt jedoch keinen Datensatz hinzu, sondern ändert einen bestehenden. Als letztes sorgt die \textit{DELETE} Methode dafür, das ein spezieller Datensatz entfernt wird. Durch diese Methoden ist es möglich, lediglich über \Gls{URI}s, Daten in einem Rest-Service zu verwalten.\\
+\\
+Die API des \textit{thEvaluator} Frameworks bietet einen Rest-Service an, um die durch die Umfrage aufgenommenen Ergebnisse bereitzustellen, und die Möglichkeit zu geben, die verschiedenen Daten für Tests und Testcases zu verwalten. Genutzt wird dieser Service ausschließlich von der Webappliaktionskomponente. Für die Initialisierung der \Gls{URI}s in NodeJS ist das express Framework verantwortlich. Es bietet eine einfache Syntax für diesen Anwendungsfall an. Listing \ref{post} zeigt die Registrierung einer \Gls{URI} für die \textit{POST} Methode.
+
+\vspace{1cm}
+\begin{lstlisting}[caption=Registrierung einer URI für die \textit{POST} Methode,label=post]
+var express = require('express');
+var app = express();
+
+app.post('/api/object', function(req, res){
+  res.send(JSON.stringify("{...}");
+});
+
+app.listen(3000);
+\end{lstlisting}
+\vspace{0.6cm}
+
+Der Callback der \textit{POST} Methode enthält zwei Parameter. Ein Request-Objekt beinhaltet zum Einen wichtige Informationen zum Request, wie z.B. Header Informationen oder mitgesendete Daten. Zum Anderen steht ein Response-Objekt bereit, das die Antwort des Servers repräsentiert. In diesem Beispiel wäre unter der URL \url{http://localhost:3000/api/object} das Objekt erreichbar, welches als Parameter in die \textit{send} Methode des Response-Objektes mitgeschickt wird. Das Listing ist lediglich eine vereinfachte Darstellung. In der Regel finden in diesen Callbacks komplexere Algorithmen und Datenbank-Abfragen statt.\\
+\\
+Im Folgenden gibt es eine Auflistung der angebotenen Rest-Services der API. Diese erlauben es der Webapplikation des \textit{thEvaluator} Frameworks Testcases und Tasks zu verwalten, sowie die Testergebisse einzufordern. Die Auflistung ist nach Objekttyp gruppiert.\\
+\\
+\\
+{\footnotesize
+\begin{tabular}{ p{5.5cm} p{9cm} }
+  \hline
+  \multicolumn{2}{c}{\textbf{Testcase}} \\
+  \hline
+  GET \textit{/api/testcase/:id?} & Gibt die kompletten Daten eines Testcase Objektes zurück. Ist keine ID spezifiziert, werden alle Testcases aus der Datenbank geladen\vspace{0.2cm}\\
+  GET \textit{/api/testcase/:id/screenshot.jpg} & Sendet für die gegebene Testcase ID ein Screenshot im JPG Format zurück. Der Request muss dabei einen \textit{url} Parameter beinhalten mit der gewünschten URL von der Seite des Screenshots\vspace{0.2cm}\\
+  POST \textit{/api/testcase} & Speicherung des Testcases, inklusive dessen Tasks, in die Datenbank\vspace{0.2cm}\\
+  PUT \textit{/api/testcase/:id} & Änderung des Testcase Objektes, inklusive Inhalte und Ordnung der beinhaltenden Tasks. Eine ID des Testcases am Ende der URL wird benötigt, um einen Testcase zu spezifizieren\vspace{0.2cm}\\
+  DELETE \textit{/api/testcase/:id} & Löschen eines durch die erforderliche ID spezifizierten Testcase\vspace{0.2cm}\\
+  \hline
+\end{tabular}
+}
+\\
+\\
+\\
+{\footnotesize
+\begin{tabular}{ p{5.5cm} p{9cm} }
+  \hline
+  \multicolumn{2}{c}{\textbf{Testrun}} \\
+  \hline
+  GET \textit{/api/testcase/:id?} & Gibt die kompletten Daten eines Testrun Objektes zurück. Ist keine ID spezifiziert, werden alle Testruns aus der Datenbank geladen\vspace{0.2cm}\\
+  GET \textit{/api/testrun/byTestcase/:id} & Gibt die kompletten Daten eines Testrun Objektes für einen bestimmten Testcase zurück. Ist keine ID spezifiziert, werden alle Testruns des Testcases aus der Datenbank geladen\vspace{0.2cm}\\
+
+  \hline
+\end{tabular}
+}
+\\
+\\
+\\
+Der Aufbau des Rest-Services ist recht simpel gehalten. Die Ausgabe der Objekte in den GET Requests erfolgt ohne Einschränkung. Das bedeutet, dass alle Attribute ausgegeben werden. Dies vereinfacht zu Beginn die Entwicklung, da sich die Webapplikation nur einmal alle Daten holen muss, um damit arbeiten zu können. Da die Applikation jedoch im Laufe der Zeit gewachsen ist und immer mehr Daten die Objekte beschreiben, werden die Ausgaben der Rest-Services immer größer. Nachdem der Beta Test von \textit{thEvaluator} gestartet war und die ersten 15 Testruns in der Produktiv-Umgebung durchgeführt wurden, stieg der Traffic zwischen Applikation und Rest-Service enorm an. Dies führte zu drastischen Performance Problemen. Der Response zur Abfrage aller Testruns eines Testcases hatte plötzlich bei einer bestimmten Testcase-ID die Größe von 8,8 MB und benötigte ca. 9 Sekunden.\\
+\\
+Der Rest-Service des Frameworks ist somit klar zu klein skaliert. Hier besteht eindeutig ein Verbesserungsbedarf. Objekte dürfen nicht mehr im Ganzen ausgeliefert werden, sondern sollten lediglich die Grundinformationen enthalten und Querverweise zu weiteren Daten. Diese können dann bei Bedarf über einen weiteren Request angefordert werden. Zudem sollten weitere \Gls{URI}s die Möglichkeit bieten spezielle Teile der Objekte auszulesen. Gerade bei datenlastigen Anwendungen muss es die Möglichkeit einer Art Pagination geben, da in den wenigsten Fällen wirklich alle Resultate eines Datensatzen benötigt werden.
 
 \subsection{Socket Streams}
-% Auflistung mit erforderten Werten / Rückgabewerten
+% Auflistung mit erforderten Werten / Rückgabewerten
 
 \subsection{Persistierung}
 % SQL vs NoSQL
