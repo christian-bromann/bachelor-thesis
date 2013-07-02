@@ -13,14 +13,46 @@
 
 \section{API}
 
-Die \textbf{API} ist der Datenmotor des Frameworks. Sie ist sowohl für die Datenpersistierung als auch für dessen Auslieferung zuständig. Hinter ihr steckt eine NodeJS Applikation, die als dedizierter Service auf einem Server unter einem bestimmten Port laufen muss. Bei einem Test ist sie in ständiger Verbindung mit der Browser Extension, um möglichst viele Daten aufzunehmen. NodeJS eignet sich hierfür sehr gut, da es event-getrieben agiert und dabei nicht blockierend wirkt. Dies bedeutet, dass alle langandauerenden Aktivitäten, wie z.B. Dateizugriffe, Netzwerk Kommunikationen oder Datenbankzugriffe, bei Seite gepackt werden, bis sie beendet sind und das Ergebnis in einer Funktion verarbeitet werden kann \cite{nonblocking}. Dadurch werden Server-Anfragen parallel abgearbeitet und nicht, wie z.B. bei PHP, sequenziell. Dies sorgt für eine stabile Verbindung zwischen Server API und Extension. Zusätzlicher Vorteil einer NodeJS basierten API Architektur ist die Performance. NodeJS basiert auf Googles hochgeschwindigkeits V8 Engine und sorgt damit für eine deutliche höhere Reaktionszeit beim Server im Vergleich zu Apache-Servern \cite{nodevsphp}.
+Die \textbf{API} ist der Datenmotor des Frameworks. Sie ist sowohl für die Datenpersistierung als auch für dessen Auslieferung zuständig. Hinter ihr steckt eine NodeJS Applikation, die als dedizierter Service auf einem Server unter einem bestimmten Port laufen muss. Bei einem Testrun ist sie in ständiger Verbindung mit der Browser Extension, um möglichst viele Daten aufzunehmen. NodeJS eignet sich hierfür sehr gut, da es event-getrieben agiert und dabei nicht blockierend wirkt. Dies bedeutet, dass alle langandauerenden Aktivitäten, wie z.B. Dateizugriffe, Netzwerk Kommunikationen oder Datenbankzugriffe, bei Seite gepackt werden, bis sie beendet sind und das Ergebnis in einer Funktion verarbeitet werden kann \cite{nonblocking}. Dadurch werden Server-Anfragen parallel abgearbeitet und nicht, wie z.B. bei PHP, sequenziell. Dies sorgt für eine stabile Verbindung zwischen Server API und Extension. Zusätzlicher Vorteil einer NodeJS basierten API Architektur ist die Performance. NodeJS basiert auf Googles hochgeschwindigkeits V8 Engine und sorgt damit für eine deutliche höhere Reaktionszeit beim Server im Vergleich zu Apache-Servern \cite{nodevsphp}.
 
+\subsection{Installation und Starten des Services}
+
+Um die API auf einem Server zum Laufen zu bringen, muss NodeJS\footnote{Hinweise zur Installation von NodeJS - \url{http://nodejs.org/download/}} und Mongo\footnote{Hinweise zur Installation von MongoDB - \url{http://docs.Mongo.org/manual/installation/}} darauf installiert sein. Als Erstes erfolgt die Einrichtung der Datenbankumgebung. Mongo sollte dafür über den Befehl \textit{mongod} gestartet sein. Für die Konfiguration kann das Kommandozeileninterface des Datenbanksystems genutzt werden.
+
+\vspace{1cm}
+\begin{lstlisting}[caption=Einrichten der Mongo Datenbank,label=initMongo]
+// Kommandozeileninterface starten
+$ mongo
+
+// Collection fuer thEvaluator erstellen
+> db.createCollection("thEvaluator")
+
+// zu dieser Collection wechseln
+> use thEvaluator
+
+// User anlegen
+> db.addUser("username", "password")
+\end{lstlisting}
+\vspace{1cm}
+
+Als nächstes sollten die Zugangsdaten für den erzeugten User in die \textit{config.json} eingetragen werden. Diese Datei enthält alle wichtigen Konfigurationsvariablen, wie z.B. der Port, auf dem die Applikation gestartet werden soll, oder Datenbankzugriffsdaten, wie Username oder Passwort. Für den Start der Applikation ist es empfehlenswert diese über das NodeJS Forever Modul zu starten. Diese kümmert sich darum, dass die App kontinuierlich im Hintergrund am Laufen gehalten wird.
+
+\vspace{1cm}
+\begin{lstlisting}[caption=Installation von Forever auf dem Server,label=forever]
+$ [sudo] npm install forever -g
+\end{lstlisting}
+\vspace{1cm}
+
+Nachdem dies erledigt ist und Forever erfolgreich installiert wurde, kann der nun vorhandene Kommandozeilenbefehl des Modules genutzt werden, um die NodeJS Applikation im Hintergrund starten zu lassen.
+
+\vspace{1cm}
+\begin{lstlisting}[caption=Starten des API Services über den Forever-Befehl,label=forever]
+$ forever start index.js
+\end{lstlisting}
 
 \subsection{Architektur}
 
-NodeJS bietet in seinen Core-Modulen jegliche Funktionalität, die für den Aufbau einer Anwendung notwendig ist. Zusätzlich können Packages eingebunden werden, die weitere Funktionalität für die Erstellung spezieller Anwendungen bringt. Diese sogenannten NPM\footnote{Node Packaged Modules - \url{https://npmjs.org}} Module werden von der NodeJS Community erstellt und maintained. Die API des \textit{thEvaluator} Frameworks nutzt bspw. \textit{express}\footnote{express - web application framework for node \url{http://expressjs.com/}} als Web-Applikations-Framework, um die Rest-Services zu initialisieren und die Socket Schnittstellen einzubinden. Diese werden über das \textit{Sockel.IO}\footnote{Socket.IO - v9 - \url{http://socket.io}} Modul abstrahiert. Zuletzt bietet die \textit{mongoose}\footnote{mongoose - elegant mongodb object modeling for node.js - \url{http://mongoosejs.com/}} Library eine Abstrahierung zur MongoDB Datenbank. Dabei erhalten jegliche C++ - Bindings der MongoDB Architektur eine entsprechende Verknüpfung mit einer JavaScript Funktion, um den Einsatz in NodeJS möglich zu machen.\\
-\\
-MongoDB ist eine einfach zu skalierende, agile, dokumenten-orientierte Datenbank, geschrieben in C++. Im Bereich der NoSQL Datenbanken ist das Open Source Projekt marktführend und sehr performant. Im Gegensatz zu einer MySQL Datenbank ist diese schemafrei und erfordert dabei keine starren Tabellen mit festgelegten Spalten. Aufgeteilt wird eine MongoDB-Datenbank in verschiedene Collections, die unabhängig voneinander sind und getrennt auf dem Server gespeichert werden \cite{nosql}. Eine Collection entspricht einer Tabelle einer SQL-Datenbank. Sie enthält jegliche Informationen für ein Datenobjekt. Einträge in einer Collection werden als Dokumente bezeichnet und entsprechen einer Zeile einer SQL-Datenbank. Da MongoDB eine schemafreie Ansatz der Datenpersistierung verfolgt, ist die Struktur einer Collection flexibel und kann immer wieder geändert werden.
+NodeJS bietet in seinen Core-Modulen jegliche Funktionalität, die für den Aufbau einer Anwendung notwendig ist. Zusätzlich können Packages eingebunden werden, die weitere Funktionalität für die Erstellung spezieller Anwendungen bringt. Diese sogenannten NPM\footnote{Node Packaged Modules - \url{https://npmjs.org}} Module werden von der NodeJS Community erstellt und maintained. Die API des \textit{thEvaluator} Frameworks nutzt bspw. \textit{express}\footnote{express - web application framework for node \url{http://expressjs.com/}} als Web-Applikations-Framework, um die Rest-Services zu initialisieren und die Socket Schnittstellen einzubinden. Diese werden über das \textit{Sockel.IO}\footnote{Socket.IO - v9 - \url{http://socket.io}} Modul abstrahiert. Zuletzt bietet die \textit{mongoose}\footnote{mongoose - elegant Mongo object modeling for node.js - \url{http://mongoosejs.com/}} Library eine Abstrahierung zur Mongo Datenbank. Dabei erhalten jegliche C++ - Bindings der Mongo Architektur eine entsprechende Verknüpfung mit einer JavaScript Funktion, um den Einsatz in NodeJS möglich zu machen.
 
 \begin{center}
 \includegraphics[scale=0.49]{./images/api-architecture}
@@ -31,8 +63,27 @@ MongoDB ist eine einfach zu skalierende, agile, dokumenten-orientierte Datenbank
     \label{api}
 \end{figure}
 
-Der Unterschied zwischen der Rest- und der Socket-Schnittstelle ist, dass beim Letzteren lediglich einmal eine Verbindung zwischen Client und Server hergestellt werden muss. Nach dem Handshake bleibt die TCP Verbindung bestehen und kann Daten in beide Richtungen austauschen. Der HTTP-Overhead, der teilweise mehrere 100 Byte umfassen kann, fällt dadurch weg. Da die API in der Lage sein muss viele Anfragen von der Extension aufzunehmen, spart dies enorm viel Traffic und steigert die Performance.
+Der Unterschied zwischen der Rest- und der Socket-Schnittstellen ist, dass beim Letzteren lediglich einmal eine Verbindung zwischen Client und Server hergestellt werden muss. Nach dem Handshake bleibt die TCP Verbindung bestehen und kann Daten in beide Richtungen austauschen. Der HTTP-Overhead, der teilweise mehrere 100 Byte umfassen kann, fällt dadurch weg. Da die API in der Lage sein muss viele Anfragen von der Extension aufzunehmen, spart dies enorm viel Traffic und steigert die Performance.
 
+\subsection{Datenmodelle und Persistierung}
+\label{mongo}
+
+Wie im letzten Kapitel schon erwähnt, nutzt die API Mongo als Datenbanksystem. Mongo ist eine einfach zu skalierende, agile, dokumenten-orientierte Datenbank, geschrieben in C++. Im Bereich der NoSQL Datenbanken ist das Open Source Projekt marktführend und sehr performant. Im Gegensatz zu einer MySQL Datenbank sind die Datenstrukturen schemafrei und erforderen keine starren Tabellen mit festgelegten Spalten und Attributen. Aufgeteilt wird eine Mongo-Datenbank in verschiedene Dokumente, die unabhängig voneinander sind und getrennt auf dem Server gespeichert werden \cite{nosql}. Ein Dokument entspricht einer Tabelle einer SQL-Datenbank. Sie enthält jegliche Informationen für ein Datenobjekt. Da Mongo eine schemafreie Ansatz der Datenpersistierung verfolgt, ist die Struktur eines Dokumentes flexibel und kann immer wieder geändert werden.\\
+\\
+Seitdem sich NoSQL auf dem Markt etabliert hat, gibt es die Debatte darüber, welche Typ Datenbank besser ist. Viele Blog-Posts und Foren im Internet beschäftigen sich mit dem Thema und stellen letztendlich heraus, dass es keinen wirklichen Sieger in dieser Auseinandersetzung gibt. Die Wahl des Typs hängt stark von der Art der Applikation und der Vorliebe des Entwicklers ab. Für das \textit{thEvaluator} Framework fiel die Entscheidung auf MongoDB, da bereits viele positive Erfahrungen mit diesem Datenbanksystem gesammelt wurden. Sein schemaloser Charakter passt sehr gut in die dynamische Typisierung von JavaScript. Nichtsdestotrotz wäre die Persistierung der Daten in eine SQL-Datenbank ebenfalls möglich gewesen. Da die Datenobjekte ziemlich unabhängig voneinander sind, wären Argument über schlechte Performance aufgrund von vielen \textit{joins} nicht aussagekräftig gewesen.\\
+\\
+Obwohl MongoDB eine schemafreie Datenbank ist, erfordert es die Definition eines Schemas zur Erzeugung eines Model-Objektes. Diese Definition ist jedoch nicht verpflichtend. Die Struktur der Objekte sowie der Datentyp kann sich auch nach der initialen Erstellung ändern. Wird bspw. ein Objekt hinzugefügt, so erhalten alle schon gespeicherten Objekte den Wert \textit{null}. Dadurch erfordert es kaum Mühe und Aufwand die Datenbankstruktur zu erweitern, während die Applikation wächst.\\
+\\
+Die Daten des \textit{thEvaluator} Frameworks werden in vier unterschiedliche Models gespeichert. Diese beinhalten entweder eine oder mehrere Referenzen auf andere Models (in einem Array gehalten) oder speichern Daten in einer JavaScript-typisierten Form. Da MongoDB diese serialisiert in binären JSON Dateien ablegt (sog. BSON-Files), sind jegliche Typen, die JavaScript implementiert, verfügbar\footnote{der ECMAScript Standard definiert 6 verschiedene Typen: Number, String, Boolean, Null, Undefined, Object}. Datenstrukturen können somit entweder direkt als \textit{Object} im Model definiert werden oder als Referenz zu einen eigenen Modeltyp verweisen, wenn die Struktur in anderen Models ebenfalls benötigt wird.
+
+\begin{center}
+\includegraphics[scale=0.45]{./images/models}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Datenmodel der API}
+    \label{models}
+\end{figure}
 
 \subsection{Asynchronität in NodeJS}
 
@@ -184,7 +235,3 @@ Der Rest-Service des Frameworks ist somit klar zu klein skaliert. Hier besteht e
 
 \subsection{Socket Streams}
 % Auflistung mit erforderten Werten / Rückgabewerten
-
-\subsection{Persistierung}
-% SQL vs NoSQL
-% MongoDB / Mongoose
