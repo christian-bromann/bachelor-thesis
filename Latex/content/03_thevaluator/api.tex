@@ -233,5 +233,34 @@ Der Aufbau des Rest-Services ist recht simpel gehalten. Die Ausgabe der Objekte 
 \\
 Der Rest-Service des Frameworks ist somit klar zu klein skaliert. Hier besteht eindeutig ein Verbesserungsbedarf. Objekte dürfen nicht mehr im Ganzen ausgeliefert werden, sondern sollten lediglich die Grundinformationen enthalten und Querverweise zu weiteren Daten. Diese können dann bei Bedarf über einen weiteren Request angefordert werden. Zudem sollten weitere \Gls{URI}s die Möglichkeit bieten spezielle Teile der Objekte auszulesen. Gerade bei datenlastigen Anwendungen muss es die Möglichkeit einer Art Pagination geben, da in den wenigsten Fällen wirklich alle Resultate eines Datensatzen benötigt werden.
 
-\subsection{Socket Streams}
-% Auflistung mit erforderten Werten / Rückgabewerten
+
+\subsection{WebSockets}
+
+Die Möglichkeit der Kommunikation zwischen Webseiten untereinander und Webseiten zu Servern hat sich seit Einführung von HTML5 erweitert. Neben dem Cross-Document Messaging, welches das Versenden von Nachrichten über verschiedene Fenster, Tabs oder iFrames ermöglicht, schrieb Ian Hickson, Hauptverfasser der HTML5 Spezifikation, ebenfalls eine Festlegung für WebSockets.\\
+\\
+Da das Web seit langem nicht mehr einfache Dokumente austauscht, sondern immer mehr zu einer Echtzeit-Kommunikation tendiert, war es an der Zeit, einen schnelleren Datenaustausch zwischen Browser und Server zu ermöglichen. Die Erweiterung des HTTP Protokolls zu Version 1.1 ermöglichte es zwar, die Verbindung zum Austausch von Daten wiederzuverwenden, der ständige Austausch der Headerdaten erzeugte jedoch immer noch zu viel Overhead. Zudem funktioniert das HTTP Protokoll nach dem \textit{halbduplex} Prinzip. Dies bedeutet, dass Daten nur in eine Richtung ausgetauscht werden konnten. Dies ist sehr ineffizient. Würden wir beim Telefonieren das gleiche Prinzip verwenden, so könnte wie bei Walkie Talkies immer nur eine Person sprechen und die andere müsste zuhören. Für eine Echtzeit-Kommunikation ist dies ungeeignet.\\
+\\
+WebSockets bieten eine vollduplexe, bidirektionale Verbindung, bei der nur ein mal die Verbindung zum Server aufgebaut werden muss und diese dann für den Austausch von Daten in beiden Richtungen genutzt werden kann. Diese Daten können entweder aus Text-Einheiten bestehen, die mit jeweils 2 Byte am Anfang und Ende umrahmt werden und in beide Richtungen gleichzeitig gesendet werden \cite{socketsbirectional}. Dadurch sinkt die Wartezeit, da der Server nicht mehr auf eine Anfrage vom Browser warten muss, sondern direkt Daten schicken kann, sobald welche vorhanden sind. Diese \\
+\\
+Die API nutzt diese Technologie, um der Extension des \textit{thEvaluator} Framework die Möglichkeit zu bieten, die enorme Menge von Daten, die während eines Testlaufes aufgezeichnet werden, schnell und effizient abzuschicken. Da die Extension lediglich nur einmal Informationen über Testcase und Tasks benötigt, sendet die API kaum Informationen rauß, sondern nutzt die aufrecht erhaltene TCP Verbindung, um möglichst schnell viele Daten aufzunehmen. WebSockets sparen dadurch enorm an Bandbreite, CPU Power und Latency \cite{websockets}. Um diese mit der API und dem darunter liegenden express Framework zu verheiraten, wurde das Socket.IO\footnote{\url{http://socket.io/}} Framework verwendet. Es unterstützt verschiedene Transport-Mechanismen und vereinfacht dadurch den Einsatz der Technologie in verschiedenen Browser und Devices. Die Erweiterung der Extension und die mögliche Unterstützung für andere Browser ist dadurch einfach möglich.\\
+\\
+Die in JavaScript implementierte WebSocket-API ist komplett Event-getrieben. Die API des \textit{thEvaluator} Frameworks hört deshalb kontinuierlich auf Events, die über die TCP-Verbindung von der Extension kommen. Diese Events werden relative oft angestoßen. Daten werden dabei zu Beginn und Ende eines Testlaufes, bei jedem Klick durch den User oder bei jedem neuen Seitenaufruf ausgetauscht. Die meisten Events jedoch werden durch die Bewegung der Maus abgefeuert. Um möglichst später eine genaue Heatmap aus den Mauspositionen zu erzeugen, werden mindestens alle 100ms Mauspositionen an die API geschickt. Jedes Event beinhaltet dabei vordefinierte Parameter und Daten, die mitgeschickt werden müssen, um die Daten korrekt zu verarbeiten und zuzuordnen. Kann eine Mausposition bspw. nicht einem Testlauf zugeordnet werden, so verfallen die Daten einfach und die API verfasst lediglich einen entsprechenden Hinweis in der Log Dateien. Zum Absturz kann es dadurch nicht kommen. Die folgende Tabelle listet die Events auf, die von der API angenommen und Verarbeitet werden.\\
+\\
+\\
+{\footnotesize
+\begin{tabular}{ p{3cm} p{11.5cm} }
+  \hline
+  \multicolumn{2}{c}{\textbf{Testrun}} \\
+  \hline
+  \textit{getTestcase} & Erwartet von Extension eine Testcase-ID und einen Callback, um die entsprechenden Testcase-Objekt aus der Datenbank zu lesen und es als Parameter über die Callback-Funktion zurückzuschicken\vspace{0.2cm}\\
+  \textit{init} & Erzeugt einen TestRun Objekt und ordnet ihn einem Testcase mit der gegebenen ID zu\vspace{0.2cm}\\
+  \textit{clickPosition} & Speichert die übergebene Klick-Position als EventPosition Model und ordnet sie dem Testlauf zu\vspace{0.2cm}\\
+  \textit{movePosition} & Speichert die übergebene Cursor-Position als EventPosition Model und ordnet sie dem Testlauf zu\vspace{0.2cm}\\
+  \textit{geoData} & Speichert die GeoDaten des Users im TestRun Objekt\vspace{0.2cm}\\
+  \textit{screenshot} & Erwartet ein Base64-encodiertes Bild von der Extension, um es als JPG Image im Dateisystem zu speichern\vspace{0.2cm}\\
+  \textit{pagevisit} & Speichert die übergebene URL der Extension und fügt sie als Element im \textit{pagevisit} Attribut des Testrun Objektes hinzu\vspace{0.2cm}\\
+  \textit{feedback} & Speichert den Feedbacktext der Extension im Testrun Objekt\vspace{0.2cm}\\
+  \textit{endTestrun} & Ändert das Status-Attribute abhängig von Ausgang des Testlaufes\vspace{0.2cm}\\
+  \hline
+\end{tabular}
+}
