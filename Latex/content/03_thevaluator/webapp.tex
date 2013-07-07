@@ -60,7 +60,7 @@ Für das Deployment werden verschiedene Dependencies vorausgesetzt. Das System b
 $ [sudo] npm install grunt -g
 $ [sudo] npm install bower -g
 \end{lstlisting}
-\vspace{1cm}
+\vspace{0.5cm}
 
 Bower ist wie NPM eine Package- und Dependancy-Manager. Jegliche Zusatzkomponenten, wie z.B. jQuery oder Backbone, die die Webapplikation für den Frontend-Bereich benötigt, werden in einer zentralen Datei mit einer festdefinierten Versionsnummer festgehalten und können bequem über die Konsole heruntergeladen werden. Dies erspart dem Entwickler den Aufwand die Datei manuell herunterzuladen. Die \textit{thEvaluator}-Webapplikation benötigt für verschiedene Teile der Anwendung Zusatzbibliotheken. Diese werden im Frontend-Bereich im JavaScript oder auf System-Ebene für die Build-Prozesse benötigt. Listing \ref{installDependencies} zeigt, wie jegliche benötigte Bibliotheken herunterzuladen werden müssen.
 
@@ -69,7 +69,7 @@ Bower ist wie NPM eine Package- und Dependancy-Manager. Jegliche Zusatzkomponent
 $ npm install
 $ bower install
 \end{lstlisting}
-\vspace{1cm}
+\vspace{0.5cm}
 
 Bevor nun die Applikation genutzt werden kann, müssen die Dateien deployt werden. Im Gegensatz zu Java, bei denen dabei binäre Dateien erzeugt werden, wird bei einem Deployment einer Webapplikation Dateien zusammengefügt und minifiziert. zum Einen werden jegliche Templates, JavaScripte und Bibliotheken in eine Datei zusammengefasst und minifiziert. Zusätzlich werden die Sass Dateien zu CSS Dateien übersetzt und Bilder optimiert. Der Gesamte Vorgang dauert ca. 10min und resultiert mit einem \textit{dist}-Ordner, in dem die alle präparierten Dateien zusammengefügt liegen. Als Letztes muss lediglich eine Serverinstanz erstellt werden, die die Dateien ausliefert. Dies wird dank Yeoman in einem Grunt-Task bereits geliefert. Die Webapplikation nutzt, genauso wie die API, einen \textit{forever}-Prozess, um diese Serverinstanz dauerhaft am laufen zu halten. Listing \ref{build} zeigt, die Befehle, die den Deploymentprozess anstoßen und die App starten.
 
@@ -78,11 +78,52 @@ Bevor nun die Applikation genutzt werden kann, müssen die Dateien deployt werde
 $ grunt build
 $ grunt forever:start
 \end{lstlisting}
-\vspace{1cm}
+\vspace{0.5cm}
+
 
 \subsection{Architektur}
-% Backbone, Models (die DB Modelle abbilden) Collections, Views
-% MV* Erklärung
+
+Die Architektur der Webapplikation basiert auf Backbone\footnote{\url{http://documentcloud.github.io/backbone}}. Es gibt dem JavaScript eine Struktur und unterteilt die Objekte in Views und Models. Dadurch entsteht eine Trennung von Business- und der User-Interface-Logik. Dies wird unterstützt durch den Einsatz von UnderscoreJS\footnote{\url{http://underscorejs.org}}, mit dem es möglich ist, dynamische Templates zu erzeugen. Die gesamte Architektur entspricht dadurch einem MV* Model, da es in Backbone nicht wirklich so etwas wie einen Controller gibt. Dieser wird oft imitiert durch einfaches JavaScript Prototyping. Die meiste Logik jedoch spielt sich in den diversen Views der Applikation ab. Zentraler Dreh- und Angelpunkt ist der Backbone Router. Er definiert für jede URL eine Hauptview, die initialisiert wird, sobald es zum Aufruf kommt. Diese View rendert dann verschiedene Templates oder definiert weitere Unter-Views, die gemeinsam die Webseite aufbauen. Der Router betrachtet dabei als URL alles hinter dem Hashtag am Ende des Pfades (z.B. \textit{\#/evaluate} oder \textit{\#/create}). Jegliche Links müssen daher als Ziel einen speziellen Hashtag angeben, anstatt eine neue URL. Dadurch wird die Seite zu einer sogenannten \textit{Singe-Page-Application}. Seit der HTML5-Ära besteht die Möglichkeit, Einträge im Browser Verlauf hinzuzufügen oder zu verändern. Dadurch ist es möglich, den Hashtag am Ende der URL wegzulassen und die Änderung der URL über JavaScript vorzunehmen. Dem Benutzer wird dadurch suggeriert, dass eine neue URL aufgerufen wird, ohne das der Browser eine neue Seite geladen hat.\\
+
+\begin{center}
+\includegraphics[scale=0.55]{./images/architecture}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Frontend Architektur der Webapplikation}
+    \label{webappview}
+\end{figure}
+
+Eine weitere Komponente der Applikation sind die Datenobjekte. Backbone ermöglicht es Models zu definieren, die den Inhalt der Datenbank-Modelle widerspiegeln. Jedes Model erhält dabei eine URL, die respektiv für den Inhalt des Datenbank-Models steht. Wird das Model erzeugt, so zieht sich Backbone automatisch den Inhalt über einen Ajax-Request zur Rest-Schnittstelle. Das Gleiche geschieht bei der Persistierung. Ändert die Logik den Inhalt des Models, so kann es diesen mit der Datenbank synchronisieren über die \textit{save}-Methode. Die Nutzung von Datenobjekten in einer Backbone-Applikation verhält sich somit sehr transparent. Es scheint, als würde direkt mit den Objekten der Datenbank gearbeitet werden.\\
+\\
+Die Oberkategorie der Models sind \textit{Collections}. Sie beinhalten eine Menge von Models eines Typs und besitzen ebenfalls ein URL Attribut, um den Inhalt mit der Rest-Schnittstelle zu referenzieren. Anstatt eine Reihe von einzelnen Models über eine IF-Schleife zu laden, kann durch den Daten-Container ein ganzes Set einzelner Daten auf ein mal geladen werden. Dies vereinfacht die Handhabung von großen Datenreihen.\\
+\\
+Jegliche Logik in den JavaScript Dateien ist modularisiert mit RequireJS\footnote{\url{http://requirejs.org/}}. Jeder Controller oder jeder View besitzt verschiedene Dependencies, die erfüllt sein müssen, damit die Funktionen fehlerfrei ausgeführt werden können. Diese Dependencies bestehen meist aus Views, Templates oder JavaScript Bibliotheken wie jQuery. Das Objekt benötigt eine Referenz zu diesen, um mit ihnen zu arbeiten. Mit RequireJS ist es möglich, jeden Teil der Applikation zu modularisieren und sie als Dependency in anderen Modulen zu einzubinden. Ähnlich wie bei NodeJS, Java oder C geschieht dies am Kopf der Datei. Dies hilft ungemein die Struktur des Codes frei zu organisieren. Listing \ref{requirejs} wie die Modularisierung und das Einbinden von Dependencies funktioniert.
+
+\vspace{1cm}
+\begin{lstlisting}[caption=Modularisierung mit RequireJS,label=requirejs]
+// Angabe der Dependencies
+define([
+    'jquery',
+    'backbone',
+    'text!templates/Start.tpl',
+    'views/TestcaseListView',
+    'collections/TestcaseCollection'
+    
+// Referenzierung der Dependencies zu Objekten, die innerhalb der Funktion genutzt werden koennen
+], function ($, Backbone, template, TestCaseListView, TestCaseCollection) {
+    'use strict';
+
+    var StartView = Backbone.View.extend({
+        // Logik der View
+        // ...
+    });
+
+    // Rueckgabewert des Moduls
+    return StartView;
+});
+\end{lstlisting}
+\vspace{0.5cm}
 
 \subsection{Evaluation}
 \label{evaluation}
