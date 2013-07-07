@@ -125,9 +125,68 @@ define([
 \end{lstlisting}
 \vspace{0.5cm}
 
+
 \subsection{Evaluation}
 \label{evaluation}
-% Was ist mglich, wie weit gehen die Auswertungen
+
+Die Auswertungsmöglichkeiten der \textit{thEvaluator}-Webapplikation sind unterteilt in 5 verschiedene Widgets. Nachdem ein Testcase zur Evaluierung ausgewählt wurde, erscheint als erstes eine Übersicht mit der Gesamtanzahl der abgeschlossenen Testläufe, sowie maximal und minimal Werten der Zeit und Schritte, sowie dessen Durchschnittswert. Diese Statistiken basieren dabei auf Testläufe, die erfolgreich abgeschlossen wurden. Neben der Auflistung der meist besuchten Seiten, findet der User eine Pie-Chart über den Ausgang aller Testläufe.
+\\
+\begin{center}
+\includegraphics[scale=0.45]{./images/resultWidget}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Result-Widget}
+    \label{resultWidget}
+\end{figure}
+
+Das nächste Widget ist das Maps-Widget. Es zeigt jegliche Click- und Heatmaps diverser Seiten und Testläufe, sowie dessen Gaze-Spots und Gaze-Plots. Neben der normalen Ansicht der Heatmap ist es zudem möglich, dessen Generierung in Zeitraffer mitzuverfolgen. Dadurch werden einzelne Mausbewegungen der verschiedenen User sichtbar und verfolgbar. Durch verschiedene Filter ist es möglich die Aktivität auf der ganzen Seite auf einzelne User einzuschränken. Neben der Auswahl der Seite, können Testläufe nach bestimmten Merkmalen, wie z.B. \glqq nur erfolgreiche\grqq{} oder \glqq Schnellste\grqq{}/\glqq Langsamste\grqq{}, gefiltert oder direkt einzelne Testläufe ausgewählt werden. Dadurch ist es möglich die Mausbewegung jedes einzelnen Benutzers direkt zu verfolgen und bestimmte Benutzergruppen genau zu untersuchen.\\
+\\
+Um die Mausposition der Seite zuordnen zu können, wird der von der Extension gespeicherte Screenshot der Seite als Hintergrund verwendet. Das Bild besitzt zwar lediglich eine Qualität von 10\% des Originals, dennoch ist gut zu erkennen, an welcher Stelle der geklickt wird. Für die Erzeugung der Heatmaps wird \textit{heatmap.js}\footnote{\url{http://www.patrick-wied.at/static/heatmapjs}} verwendet.
+
+\begin{center}
+\includegraphics[scale=0.45]{./images/mapWidget}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Gaze Plot Auswertung einer Seite über das Map-Widget}
+    \label{mapWidget}
+\end{figure}
+
+Da es nicht nur wichtig ist, wie sich die User auf einer einzelnen Seite verhalten, sondern auch, welchen Weg sie suchen, um an ihr Ziel zu gelangen, bietet das \textit{Walkpath}-Widget die Möglichkeit, den Verlauf des Besuches zu verfolgen. Es wird eine Art Baum aufgebaut, dessen Verzweigungen die Besucherpfade anzeigen. Die Dicke des jeweiligen Astes gibt an, wieviel Nutzer genau diesen Pfad gewählt haben. Zur Auswertung muss eine Aufgabe aus dem Testcase ausgewählt werden. Auch hier ist es wieder möglich, die Darstellung auf bestimmte Benutzergruppen einzuschränken.\\
+\\
+Für die Visualisierung der Daten wurde das bekannte \textit{d3}-Framework\footnote{\url{http://d3js.org/}} verwendet. Es nutzt den DOM, um mit SVG Elementen Daten zu visualisieren.
+
+\begin{center}
+\includegraphics[scale=0.45]{./images/walkpathsWidget}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Walkpaths-Widget}
+    \label{walkpathsWidget}
+\end{figure}
+
+Nachdem ein Testcase abgeschlossen ist, bekommt der User die Möglichkeit, sein persönliches Feedback abzugeben. Dem User steht eine Textbox zu Verfügung, in dem er seine Meinung entweder über den Testcase oder die Usability abgeben kann. Diese werden dann auf der Evaluation-Seite aufgelistet und können bei der Auswertung sehr hilfreiche Hinweise über spezifische Probleme bei der Benutzung der Webseite geben oder das Lösen des Testcases geben.
+
+\begin{center}
+\includegraphics[scale=0.45]{./images/feedbackWidget}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Feedback-Widget}
+    \label{feedbackWidget}
+\end{figure}
+
+Als letztes bietet das Geo-Widget einen Überblick über die Herkunft der Probanden. Es enthält zwar keinerlei Aussage über die Usability der Website, ermöglicht dennoch die Einsicht über die Herkunft der Probanden.
+
+\begin{center}
+\includegraphics[scale=0.45]{./images/geoWidget}
+\end{center}
+\begin{figure}[htb]
+   \centering
+   \caption{Geo-Widget}
+    \label{geoWidget}
+\end{figure}
 
 \subsection{Aufbereitung}
 % wann werden welche Daten geladen (lazy loading)
