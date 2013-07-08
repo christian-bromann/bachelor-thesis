@@ -97,7 +97,9 @@ Die Architektur der Webapplikation basiert auf Backbone\footnote{\url{http://doc
 Eine weitere Komponente der Applikation sind die Datenobjekte. Backbone ermöglicht es Models zu definieren, die den Inhalt der Datenbank-Modelle widerspiegeln. Jedes Model erhält dabei eine URL, die respektiv für den Inhalt des Datenbank-Models steht. Wird das Model erzeugt, so zieht sich Backbone automatisch den Inhalt über einen Ajax-Request zur Rest-Schnittstelle. Das Gleiche geschieht bei der Persistierung. Ändert die Logik den Inhalt des Models, so kann es diesen mit der Datenbank synchronisieren über die \textit{save}-Methode. Die Nutzung von Datenobjekten in einer Backbone-Applikation verhält sich somit sehr transparent. Es scheint, als würde direkt mit den Objekten der Datenbank gearbeitet werden.\\
 \\
 Die Oberkategorie der Models sind \textit{Collections}. Sie beinhalten eine Menge von Models eines Typs und besitzen ebenfalls ein URL Attribut, um den Inhalt mit der Rest-Schnittstelle zu referenzieren. Anstatt eine Reihe von einzelnen Models über eine IF-Schleife zu laden, kann durch den Daten-Container ein ganzes Set einzelner Daten auf ein mal geladen werden. Dies vereinfacht die Handhabung von großen Datenreihen.\\
-\\
+
+\subsection{Modularisierung}
+
 Jegliche Logik in den JavaScript Dateien ist modularisiert mit RequireJS\footnote{\url{http://requirejs.org/}}. Jeder Controller oder jeder View besitzt verschiedene Dependencies, die erfüllt sein müssen, damit die Funktionen fehlerfrei ausgeführt werden können. Diese Dependencies bestehen meist aus Views, Templates oder JavaScript Bibliotheken wie jQuery. Das Objekt benötigt eine Referenz zu diesen, um mit ihnen zu arbeiten. Mit RequireJS ist es möglich, jeden Teil der Applikation zu modularisieren und sie als Dependency in anderen Modulen zu einzubinden. Ähnlich wie bei NodeJS, Java oder C geschieht dies am Kopf der Datei. Dies hilft ungemein die Struktur des Codes frei zu organisieren. Listing \ref{requirejs} wie die Modularisierung und das Einbinden von Dependencies funktioniert.
 
 \vspace{1cm}
@@ -109,11 +111,8 @@ define([
     'text!templates/Start.tpl',
     'views/TestcaseListView',
     'collections/TestcaseCollection'
-    
 // Referenzierung der Dependencies zu Objekten, die innerhalb der Funktion genutzt werden koennen
 ], function ($, Backbone, template, TestCaseListView, TestCaseCollection) {
-    'use strict';
-
     var StartView = Backbone.View.extend({
         // Logik der View
         // ...
