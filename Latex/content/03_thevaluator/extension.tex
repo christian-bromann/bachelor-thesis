@@ -28,9 +28,9 @@ Da sich die Extension zum Zeitpunkt der Abgabe dieser Arbeit immer noch in einer
 
 Sobald der Proband die 10-stellige ID eingegeben hat und den \textit{start} Button drückt, beginnt der Testlauf. Die Extension öffnet dann einen neuen Tab und leitet den User auf die Start-URL.
 
-\subsection{Aufbau}
+\subsection{Das Manifest}
 
-Die Inhaltsstoffe einer Chrome Extension sind ganz normale HTML, CSS und JavaScript Dateien. Zusammengehalten wird alles durch ein Manifest, welches die Inhaltsstoffe auflistet und Rechte und Restriktionen festlegt. Jeder Nutzer bekommt bei der Installation angezeigt, welche diese sind und kann entscheiden, ob er sie zulassen möchte.
+Die Inhaltsstoffe einer Chrome Extension sind ganz normale HTML, CSS und JavaScript Dateien. Zusammengehalten wird alles durch ein Manifest, welches die Inhaltsstoffe auflistet und Rechte und Restriktionen festlegt. Jeder Nutzer bekommt bei der Installation angezeigt, welche diese sind und kann entscheiden, ob er sie zulassen möchte. Erst durch die Festlegung ist die Extension in der Lage auf bestimmte Bereiche der API, wie z.B. das Tab-Handling oder die Cookie-Verwaltung, zuzugreifen. Listing \ref{manifest} zeigt einen Auszug des Manifestes der \textit{thEvaluator} Chrome Extension. Neben Name, Versionsnummer und Beschreibung dieser werden Icons definiert sowie HTML Seiten und JavaScripte den jeweiligen Komponenten zugeordnet. Neben diesen Basis-Attributen sind unzählige weitere Angaben möglich, die den Charakter der Erweiterung beschreiben und sie dadurch an verschiedenen Stellen des Chrome Browsers einbetten. Das Manifest muss als JSON Datei im Root-Verzeichnis der Extension liegen.
 \\
 \begin{lstlisting}[caption=Auszug aus der Manifest.json der \textit{thEvaluator} Extension,label=manifest]
 {
@@ -65,21 +65,20 @@ Die Inhaltsstoffe einer Chrome Extension sind ganz normale HTML, CSS und JavaScr
 }
 \end{lstlisting}
 
-Listing \ref{manifest} zeigt einen Auszug des Manifestes der \textit{thEvaluator} Chrome Extension. Neben Name, Versionsnummer und Beschreibung der Extension werden zusätzlich Icons bestimmt und die Rolle der einzelnen HTML Seiten festgelegt.\\
-\\
-Eine weitere Komponente der Extension sind die Grunt\footnote{\url{http://gruntjs.com/}} Tasks. Diese kümmern sich um das Testen und Kompilieren der Extension zu einem Paket und die anschließende Umwandlung zu einer Chrome Extension Datei mit der Endung \textit{.crx}. Grunt ist ein Task-Manager, basierend auf NodeJS, welcher durch Plugins erweitert werden kann und die Entwicklung von Web-Applikationen jeglicher Art automatisiert. Die Tasks werden dabei in einer zentralen Datei, dem Gruntfile, definiert und können jeder Zeit über die Konsole ausgeführt werden. Durch die Kompilierung der Extension durch Grunt werden die CSS und JavaScript Dateien zusammengefügt und minifiziert. Dadurch schrumpft die Dateigröße der Erweiterung und macht den Sourcecode unlesbar.
+\subsection{Generierung durch Grunt}
 
+Eine weitere Komponente der Extension sind die Grunt\footnote{\url{http://gruntjs.com/}} Tasks. Diese kümmern sich um das Testen und Kompilieren der Extension zu einem Paket und die anschließende Umwandlung zu einer Chrome Extension Datei (mit der Endung \textit{.crx}). Grunt ist ein Task-Manager, basierend auf NodeJS, welcher durch Plugins erweitert werden kann und die Entwicklung von Web-Applikationen jeglicher Art automatisiert. Die Tasks werden dabei in einer zentralen Datei, dem Gruntfile, definiert und können jeder Zeit über die Konsole ausgeführt werden. Durch die Kompilierung der Extension durch Grunt werden die CSS und JavaScript Dateien zusammengefügt und minifiziert. Dadurch schrumpft die Dateigröße der Erweiterung und macht den Sourcecode unlesbar. Grundsätzlich ist die Erzeugung der Extension-Datei jedoch auch über den Chrome Browser möglich.
 
-\subsection{Architektur}
+\subsection{Komponenten}
 
 Eine Chrome Erweiterung besteht meist aus drei Komponenten. Einer \textbf{{\color{red}Background Page}}, die im Hintergrund des Browsers ausgeführt wird und die Hauptlogik enthält, einer Seite für die \textbf{{\color{green}Extension UI}}, die für die Ansicht und Logik des Extension-Fensters (PopUp) zuständig ist, und zu guter letzt einem \textbf{{\color{blue}Contentscript}}, die mit der angezeigten Seite des Browser interagieren kann \cite{extensionArchitecture}.
 
 \begin{center}
-\includegraphics[scale=0.35]{./images/layers}
+\includegraphics[scale=0.34]{./images/layers}
 \end{center}
 \begin{figure}[htb]
-   \centering
-   \caption{Die 3 Komponenten einer Chrome Extension}
+    \centering
+    \caption{Die 3 Komponenten einer Chrome Extension}
     \label{layers}
 \end{figure}
 
