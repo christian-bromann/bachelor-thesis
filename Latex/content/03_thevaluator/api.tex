@@ -50,7 +50,7 @@ Nachdem dies erledigt ist und Forever erfolgreich installiert wurde, kann der nu
 $ forever start index.js
 \end{lstlisting}
 
-\subsection{Architektur}
+\subsection{Paketstruktur}
 
 NodeJS bietet in seinen Core-Modulen jegliche Funktionalität, die für den Aufbau einer Anwendung notwendig ist. Zusätzlich können Packages eingebunden werden, die weitere Funktionalität für die Erstellung spezieller Anwendungen bringt. Diese sogenannten NPM\footnote{Node Packaged Modules - \url{https://npmjs.org}} Module werden von der NodeJS Community erstellt und maintained. Die API des \textit{thEvaluator} Frameworks nutzt bspw. \textit{express}\footnote{express - web application framework for node \url{http://expressjs.com/}} als Web-Applikations-Framework, um die Rest-Services zu initialisieren und die Socket Schnittstellen einzubinden. Diese werden über das \textit{Sockel.IO}\footnote{Socket.IO - v9 - \url{http://socket.io}} Modul abstrahiert. Zuletzt bietet die \textit{mongoose}\footnote{mongoose - elegant Mongo object modeling for node.js - \url{http://mongoosejs.com/}} Library eine Abstrahierung zur Mongo Datenbank. Dabei erhalten jegliche C++ - Bindings der Mongo Architektur eine entsprechende Verknüpfung mit einer JavaScript Funktion, um den Einsatz in NodeJS möglich zu machen.
 
