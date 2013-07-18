@@ -11,15 +11,15 @@
 
 \section{Evaluierung der thEvaluator-Applikation}
 
-Nach vielen Wochen der selbstständigen und alleinigen Entwicklung an einem Tool ist schnell das richtige Gefühl über die Qualität des Gesamtproduktes verloren. Als Entwickler befindet man sich in einer Art Tunnel und übersieht schnell Probleme, die eine fremde Person auf anhieb finden würde. Aus diesem Grund war es wichtig, die Applikation zu testen, um herauszufinden, ob auch andere Personen das Tool richtig benutzen können.
+Nach vielen Wochen der selbstständigen und alleinigen Entwicklung an einem Tool geht schnell das richtige Gefühl über die Qualität des Gesamtproduktes verloren. Als Entwickler befindet man sich in einer Art Tunnel und übersieht schnell Probleme, die eine fremde Person auf anhieb finden würde. Aus diesem Grund war es wichtig, die Applikation zu testen, um herauszufinden, ob auch andere Personen das Tool richtig benutzen können.
 
 \subsection{Simuliertes Szenario}
 
-In den Aufgaben im Test ging es vor allem darum, einen Testcase selber zu erstellen und die Funktionen der Seite kennenzulernen. Es war interessant zu sehen, welche Daten der Proband in die Formulare eingetragen hat. Daraus lies sich schnell erschließen, ob dieser mit den Anforderungen vertraut war oder nicht wusste was er auszufüllen hatte. Besondere Aufmerksamkeit galt dem Task-Formular. Eine Aufgabe sah es vor, einen Task zu erstellen, dessen Ziel der Klick auf einen Link vorsieht. Eine Erklärung zur Definition einer Ziel-Action wurde weder in der Email an die Probanden noch in der Aufgabenstellung mitgegeben. Hier war somit nicht zu erwarten, dass sich die Benutzer richtig verhalten.
+In den Aufgaben im Test ging es vor allem darum, einen Testcase selber zu erstellen und die Funktionen der Seite kennenzulernen. Es war interessant zu sehen, welche Daten der Proband in die Formulare eingetragen hat. Daraus lies sich schnell erschließen, ob dieser mit den Anforderungen vertraut war oder nicht wusste, was er auszufüllen hat. Besondere Aufmerksamkeit galt dem Task-Formular. Eine Aufgabe sah es vor, einen Task zu erstellen, dessen Ziel den Klick auf einen Link vorsieht. Eine Erklärung zur Definition einer Ziel-Aktion wurde weder in der Email an die Probanden noch in der Aufgabenstellung mitgegeben. Hier war somit nicht zu erwarten, dass sich die Benutzer richtig verhalten.
 
 \subsection{Auswertung der Daten}
 
-Nach Auswertung der Daten dieses Tests bestätigten sich die Vermutungen aus dem letzten Absatz. Die Probanden waren nicht immer in der Lage, immer die richtigen Daten in das Formular einzutragen. Gerade beim Task-Formular hat es schwerwiegende Probleme gegeben. Kein User hat es geschafft einen Task nach den Vorgaben der Aufgabe zu erstellen. Hauptursache dafür ist möglicherweise die mangelnde Beschreibung des Zielaktions-Feldes. In einem Testcase füllte ein Proband das Feld mit den Worten: \glqq \textit{versteh ich nicht}\grqq{} aus. Höchstwahrscheinlich war es die selbe Person, die am Ende den folgenden Text in der Feedbackbox hinterließ:
+Nach Auswertung der Daten dieses Tests bestätigten sich die Vermutungen aus dem letzten Absatz. Die Probanden waren nicht immer in der Lage, die richtigen Daten in das Formular einzutragen. Gerade beim Task-Formular hat es schwerwiegende Probleme gegeben. Kein User hat es geschafft, einen Task nach den Vorgaben der Aufgabe zu erstellen. Hauptursache dafür ist möglicherweise die mangelnde Beschreibung des Ziel-Aktionsfeldes. In einem Testcase füllte ein Proband das Feld mit den Worten: \glqq \textit{versteh ich nicht}\grqq{} aus. Höchstwahrscheinlich war es die selbe Person, die am Ende den folgenden Text in der Feedbackbox hinterließ:
 
 \vspace{0.3cm}
 \begin{quote}
@@ -28,7 +28,7 @@ Nach Auswertung der Daten dieses Tests bestätigten sich die Vermutungen aus dem
 \end{quote}
 \vspace{0.3cm}
 
-Wie in Kapitel \ref{targetElem} beschrieben verlangt das Zielaktions-Feld die Eingabe eines Query-Selektors aus dem DOM der Seite. Die User hätten lediglich das Feld mit einem \glqq \textit{a}\grqq{} befüllen müssen, da keine genauen Angaben über den Link genannt wurden. Als Aktion wäre \glqq \textit{click}\grqq{} richtig gewesen. Da es keinerlei Beschreibung für dieses Feld gab und die Probanden kaum Erfahrungen in Umgang mit Selektoren in einer HTML Seite hatten, ist das Resultat gut nachvollziehbar. Die nachfolgende Tabelle fasst noch mal kurz das Ergebnis des Tests zusammen.
+Wie in Kapitel \ref{targetElem} beschrieben, verlangt das Ziel-Aktionsfeld die Eingabe eines Query-Selektors aus dem DOM der Seite. Die User hätten lediglich das Feld mit einem \glqq \textit{a}\grqq{} befüllen müssen, da keine genauen Angaben über den Link genannt wurden. Als Aktion wäre \glqq \textit{click}\grqq{} richtig gewesen. Da es keinerlei Beschreibung für dieses Feld gab und die Probanden kaum Erfahrungen in Umgang mit Selektoren in einer HTML-Seite hatten, ist das Resultat gut nachvollziehbar. Die nachfolgende Tabelle fasst noch mal kurz das Ergebnis des Tests zusammen.
 \\
 \begin{center}
 {\footnotesize
@@ -47,4 +47,4 @@ Wie in Kapitel \ref{targetElem} beschrieben verlangt das Zielaktions-Feld die Ei
 \vspace{0.3cm}
 \end{center}
 
-Die Tatsache, dass bei zwei Testläufen die Zeit abgelaufen ist, lässt vermuten, dass der User zu lange zum Ausfüllen der Formulare gebraucht hat. Dies wird auch durch Einen der Feedback-Texte bestätigt. Darin hieß es: \glqq \textit{Puh! Wenig Zeit gehabt. [...]}\grqq{}. Aus Usability-Sicht könnten hier Hinweis-Links helfen, die dem Besucher Hilfestellung geben.
+Die Tatsache, dass bei zwei Testläufen die Zeit abgelaufen ist, lässt vermuten, dass der User zu lange zum Ausfüllen der Formulare gebraucht hat. Dies wird auch durch Einen der Feedback-Texte bestätigt. Darin hieß es: \glqq \textit{Puh! Wenig Zeit gehabt. [...]}\grqq{}. Aus Usability-Sicht könnten hier Hinweis-Links helfen, die dem Besucher Hilfestellungen geben.
