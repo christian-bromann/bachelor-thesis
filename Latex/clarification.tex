@@ -4,11 +4,19 @@
 % @author Christian Bromann <contact@christian-bromann.com>
 %
 
-\newpage
+\documentclass[
+	bibliography=totoc,
+	listof=totoc,							% falls Index verwendet, ergänze "index=totoc" zu den Optionen 
+	BCOR=5mm,							% Rand für Bindung: 5mm
+	DIV=12]{scrbook}
+\usepackage{bibgerm}       					% deutsche Literaturverzeichnisse
+\usepackage[utf8]{inputenc}		       			% Umlaute im Text
+\usepackage{setspace}
 
-\thispagestyle{empty}
+\pagestyle{empty}
+\linespread{1.3}
 
-\begin{large}
+\begin{document}
 
 \vspace*{1cm}
 
@@ -36,4 +44,4 @@ Berlin, den \today
 \hspace*{9.5cm}%
 \textit{Christian Bromann}
 
-\end{large}
+\end{document}
